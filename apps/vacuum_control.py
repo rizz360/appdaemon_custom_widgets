@@ -45,8 +45,7 @@ class VacuumControl(hass.Hass):
             vacuums = []
             vacuum_states = self.get_state("vacuum")
             
-            for entity_id in ["vacuum.betty", "vacuum.bjorn"]:
-                state = vacuum_states.get(entity_id, {})
+            for entity_id, state in vacuum_states.items():
                 if not state:
                     continue
                     
@@ -61,6 +60,7 @@ class VacuumControl(hass.Hass):
                 })
             
             self.log(f"Retrieved {len(vacuums)} vacuums: {vacuums}")
+            self.log(f"Available vacuums: {[v['id'] for v in vacuums]}")  # Log the IDs of available vacuums
             return {"success": True, "vacuums": vacuums}, 200
             
         except Exception as e:
