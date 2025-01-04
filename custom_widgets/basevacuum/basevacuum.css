@@ -72,8 +72,6 @@
 .start-clean {
     background: #28a745;
     color: white;
-    cursor: pointer;
-    font-size: 1.8em;
     transition: background 0.3s ease;
     min-height: 75px;
     border-radius: 15px;
@@ -81,7 +79,6 @@
     font-size: 1.2em;
     border: 2px solid transparent;
     text-align: center;
-
     margin-top: auto;
     position: relative;
     display: flex;
@@ -97,4 +94,11 @@
 
 .start-clean:hover {
     background: #218838;
+}
+
+/* Center the text within the button div */
+.start-clean {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
