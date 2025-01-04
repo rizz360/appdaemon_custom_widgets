@@ -97,12 +97,8 @@ function basevacuum(widget_id, url, skin, parameters) {
         { "selector": '#' + widget_id + ' .room-select', "action": "click", "callback": onRoomClick }
     ]
 
-    // Monitor vacuum entity - This is not used anymore, so we can skip it
-    let monitored_entities = [
-
-    ]
     // Call the parent constructor to get things moving
-    WidgetBase.call(self, widget_id, url, skin, parameters, monitored_entities, callbacks)
+    WidgetBase.call(self, widget_id, url, skin, parameters, [], callbacks)
 
     // Set initial values
     self.state = {}
