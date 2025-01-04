@@ -74,6 +74,10 @@ function basevacuum(widget_id, url, skin, parameters)
                 if (response.success) {
                     self.selectedRooms = []; // Clear selected rooms
                     updateRoomView(self); // Update the UI
+                    const startCleanButton = document.querySelector('.start-clean');
+                    if (startCleanButton) {
+                        startCleanButton.textContent = `${vacuum_id} now cleaning`;
+                    }
                 }
             },
             error: function(err) {
@@ -149,7 +153,8 @@ function basevacuum(widget_id, url, skin, parameters)
             roomHtml += `<div class="room-select${selected}" data-room-id="${room.id}">${room.name}</div>`
         })
 
-        roomHtml += `<div class="start-clean">Start Cleaning</div>`
+        const vacuum_id = (self.parameters.entity || "").split(".")[1];
+        roomHtml += `<div class="start-clean">Start ${vacuum_id}</div>`
         
         // Update state and UI
         self.state.room_list = roomHtml
