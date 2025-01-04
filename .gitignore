@@ -1,0 +1,18 @@
+# Logs
+*.log
+
+# Compiled
+*.pyc
+
+# Virtual environment (if applicable)
+venv/
+
+# Other
+__pycache__/
+
+dashboards/
+namespaces/
+web/
+www/
+compiled/
+appdaemon.yaml

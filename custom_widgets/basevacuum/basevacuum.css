@@ -1,0 +1,100 @@
+.vacuum-widget {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: #1f1f1f;
+    color: #ffffff;
+}
+
+#room_list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 10px;
+    flex-grow: 1;
+    align-content: start;
+}
+
+.room-select {
+    position: relative;
+    min-height: 50px;
+    padding: 5px;
+    background: #2c2c2c;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    border: 2px solid transparent;
+    text-align: center;
+}
+
+.room-select:before {
+    content: "";
+    font-family: "Material Icons";
+    font-size: 1em;
+    display: block;
+    margin-bottom: 10px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.room-select:hover {
+    background: #3c3c3c;
+    transform: translateY(-2px);
+}
+
+.room-select:active, .room-select.tapped {
+    background: #4c4c4c;
+    transform: scale(0.95);
+}
+
+@keyframes tapPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.room-select.tapped {
+    animation: tapPulse 0.2s ease-out;
+}
+
+.room-select.selected {
+    background: #0066cc;
+    border-color: #ffffff;
+}
+
+.start-clean {
+    background: #28a745;
+    color: white;
+    cursor: pointer;
+    font-size: 1.8em;
+    transition: background 0.3s ease;
+    min-height: 75px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    border: 2px solid transparent;
+    text-align: center;
+
+    margin-top: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-clean:before {
+    content: "robot_vacuum";
+    font-family: "Material Icons";
+    margin-right: 15px;
+}
+
+.start-clean:hover {
+    background: #218838;
+}

@@ -1,0 +1,7 @@
+---
+hello_world:
+  module: hello
+  class: HelloWorld
+vacuum_control:
+  module: vacuum_control
+  class: VacuumControl
