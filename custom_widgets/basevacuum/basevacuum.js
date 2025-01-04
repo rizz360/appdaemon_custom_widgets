@@ -90,13 +90,13 @@ function basevacuum(widget_id, url, skin, parameters) {
         { "selector": '#' + widget_id + ' .room-select', "action": "click", "callback": onRoomClick }
     ]
 
-    // Define state callbacks 
-    self.OnStateAvailable = OnStateAvailable
-    self.OnStateUpdate = OnStateUpdate
+    // Define state callbacks - These are not used anymore, so we can skip them
+    // self.OnStateAvailable = OnStateAvailable
+    // self.OnStateUpdate = OnStateUpdate
 
-    // Monitor vacuum entity
+    // Monitor vacuum entity - This is not used anymore, so we can skip it
     var monitored_entities = [
-        { "entity": parameters.entity, "initial": self.OnStateAvailable, "update": self.OnStateUpdate }
+
     ]
 
     // Call the parent constructor to get things moving
@@ -108,35 +108,36 @@ function basevacuum(widget_id, url, skin, parameters) {
     self.rooms = []
     self.selectedRooms = []
 
-    // Main entity state callback
-    function OnStateAvailable(self, state) {
-        console.log("OnStateAvailable called with state:", state)
-        processStateUpdate(self, state)
-    }
+    // Fetch the rooms data after initialization
+    fetchRooms(self)
 
-    // State update callback
-    function OnStateUpdate(self, state) {
-        console.log("OnStateUpdate called with state:", state)
-        processStateUpdate(self, state)
-    }
+    // Fetch the rooms
+    function fetchRooms(self) {
+        const vacuum_id = (self.parameters.entity || "").split(".")[1]
 
-    // Process updates from entity state
-    function processStateUpdate(self, state) {
-        console.log("Processing state update:", state)
-
-        if (!state.attributes || !state.attributes.rooms) {
-            console.log("No rooms found in state")
+        if (!vacuum_id) {
+            console.log("No valid vacuum_id found")
             return
         }
 
-        // Get rooms from the first available map
-        const mapKeys = Object.keys(state.attributes.rooms)
-        if (mapKeys.length > 0) {
-            self.rooms = state.attributes.rooms[mapKeys[0]] || []
-            console.log("Found rooms:", self.rooms)
-            updateRoomView(self)
-        }
+        $.ajax({
+            url: `${url}/api/appdaemon/vacuum_rooms?vacuum_id=${vacuum_id}`,
+            method: "GET",
+            success: function (response) {
+                if (response.success) {
+                    self.rooms = response.rooms
+                    console.log("Rooms loaded:", self.rooms)
+                    updateRoomView(self)
+                } else {
+                    console.error("Error fetching rooms:", response.error)
+                }
+            },
+            error: function (err) {
+                console.error("Error fetching rooms:", err)
+            },
+        })
     }
+
 
     // Update the room display
     function updateRoomView(self) {
@@ -144,7 +145,8 @@ function basevacuum(widget_id, url, skin, parameters) {
         var roomHtml = ""
         self.rooms.forEach(function (room) {
             var selected = self.selectedRooms.includes(room.id) ? " selected" : ""
-            roomHtml += `<div class="room-select${selected}" data-room-id="${room.id}">${room.name}</div>`
+            var icon = room.icon // Get the icon from the room data
+            roomHtml += `<div class="room-select${selected}" data-room-id="${room.id}" data-icon="${icon}">${room.name}</div>`
         })
 
         const vacuum_id = (self.parameters.entity || "").split(".")[1]
@@ -158,9 +160,9 @@ function basevacuum(widget_id, url, skin, parameters) {
         // Rebind click events for dynamically generated elements
         const roomElements = roomListContainer.getElementsByClassName("room-select")
         Array.from(roomElements).forEach((roomElement) => {
+            const icon = roomElement.getAttribute("data-icon")
             roomElement.addEventListener("click", () => onRoomClick(self, roomElement))
         })
-
         // Attach onStartClick to the .start-clean button
         const startCleanButton = roomListContainer.getElementsByClassName("start-clean")[0]
         if (startCleanButton) {

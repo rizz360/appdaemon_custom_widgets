@@ -33,8 +33,7 @@
 }
 
 .room-select:before {
-  content: '';
-  font-family: 'Material Icons';
+  font-family: 'Material Design Icons'; /* Use the correct font family */
   font-size: 1em;
   display: block;
   margin-bottom: 10px;
@@ -44,6 +43,28 @@
   transform: translateX(-50%);
 }
 
+.room-select[data-icon='mdi:sofa-outline']:before {
+  content: '\F6F8';
+}
+
+.room-select[data-icon='mdi:room-service-outline']:before {
+  content: '\F4ED';
+}
+.room-select[data-icon='mdi:chef-hat']:before {
+  content: '\F2E0';
+}
+
+.room-select[data-icon='mdi:toilet']:before {
+  content: '\F7C2';
+}
+
+.room-select[data-icon='mdi:monitor-shimmer']:before {
+  content: '\F1026';
+}
+
+.room-select[data-icon='mdi:foot-print']:before {
+  content: '\F3C4';
+}
 .room-select:hover {
   background: #3c3c3c;
   transform: translateY(-2px);
@@ -87,26 +108,18 @@
   border: 2px solid transparent;
   text-align: center;
   margin-top: auto;
-  padding-top: 5px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 25px;
 }
 
 .start-clean:before {
-  content: 'play_arrow'; /* Unicode for robot_vacuum */
-  font-family: 'Material Icons';
-  font-size: 1.5em;
-  display: block;
+  content: '\F0144';
+  font-family: 'Material Design Icons';
   position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.start-clean:hover {
-  background: #218838;
+  left: 15px;
 }
 
 /* Center the text within the button div */
