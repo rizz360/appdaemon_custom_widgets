@@ -85,7 +85,6 @@ function basevacuum(widget_id, url, skin, parameters)
     
     // Setup callbacks for events - AFTER defining the functions
     var callbacks = [
-        {"selector": '#' + widget_id + ' .start-clean', "action": "click", "callback": onStartClick},
         {"selector": '#' + widget_id + ' .room-select', "action": "click", "callback": onRoomClick}
     ]
     
@@ -162,6 +161,12 @@ function basevacuum(widget_id, url, skin, parameters)
         Array.from(roomElements).forEach((roomElement) => {
             roomElement.addEventListener("click", () => onRoomClick(self, roomElement));
         });
+
+        // Attach onStartClick to the .start-clean button
+        const startCleanButton = roomListContainer.getElementsByClassName("start-clean")[0];
+        if (startCleanButton) {
+            startCleanButton.addEventListener("click", () => onStartClick(self));
+        }
     }
 }
 
