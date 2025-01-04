@@ -89,7 +89,9 @@
 .start-clean:before {
     content: "robot_vacuum";
     font-family: "Material Icons";
-    margin-right: 15px;
+    /* Remove margin-right */
+    position: absolute; /* Make the ::before absolute so that padding would work */
+    left: 15px; /* Set the position of the icon */
 }
 
 .start-clean:hover {
