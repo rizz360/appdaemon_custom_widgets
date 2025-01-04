@@ -2,15 +2,22 @@ function basevacuum(widget_id, url, skin, parameters) {
     console.log("Initializing vacuum widget with params:", parameters)
 
     // Will be using "self" throughout for consistency
-    self = this
+    let self = this // Use let instead of var
 
     // Initialization
     self.widget_id = widget_id
     self.parameters = parameters
 
     // Define callbacks first
-    function onRoomClick(self, roomElement) {
-        console.log("Room clicked:", roomElement)
+    function onRoomClick(event) { // Add event to the click callback function
+
+        const roomElement = event.target // get the room element from the click event
+
+        if (!roomElement.classList.contains("room-select")) {
+            return // if it's not a room, don't do anything
+        }
+
+
         const roomId = parseInt(roomElement.getAttribute('data-room-id'))
         if (!roomId) {
             console.log("No valid room ID found")
@@ -38,7 +45,7 @@ function basevacuum(widget_id, url, skin, parameters) {
             self.selectedRooms.map(id => self.rooms.find(r => r.id === id).name))
         updateRoomView(self)
     }
-    function onStartClick(self) {
+    function onStartClick() {
         console.log("Start cleaning clicked")
         if (self.selectedRooms.length === 0) {
             console.log("No rooms selected - cannot start cleaning")
@@ -72,7 +79,7 @@ function basevacuum(widget_id, url, skin, parameters) {
                 if (response.success) {
                     self.selectedRooms = [] // Clear selected rooms
                     updateRoomView(self) // Update the UI
-                    const startCleanButton = document.querySelector('.start-clean')
+                    const startCleanButton = document.querySelector('#' + widget_id + ' .start-clean')
                     if (startCleanButton) {
                         startCleanButton.textContent = `${vacuum_id} now cleaning`
                     }
@@ -86,11 +93,12 @@ function basevacuum(widget_id, url, skin, parameters) {
 
 
     // Setup callbacks for events - AFTER defining the functions
-    var callbacks = [
+    let callbacks = [
         { "selector": '#' + widget_id + ' .room-select', "action": "click", "callback": onRoomClick }
     ]
+
     // Monitor vacuum entity - This is not used anymore, so we can skip it
-    var monitored_entities = [
+    let monitored_entities = [
 
     ]
     // Call the parent constructor to get things moving
@@ -136,10 +144,10 @@ function basevacuum(widget_id, url, skin, parameters) {
     // Update the room display
     function updateRoomView(self) {
         console.log("Updating room view with rooms:", self.rooms)
-        var roomHtml = ""
+        let roomHtml = ""
         self.rooms.forEach(function (room) {
-            var selected = self.selectedRooms.includes(room.id) ? " selected" : ""
-            var icon = room.icon // Get the icon from the room data
+            let selected = self.selectedRooms.includes(room.id) ? " selected" : ""
+            let icon = room.icon // Get the icon from the room data
             roomHtml += `<div class="room-select${selected}" data-room-id="${room.id}" data-icon="${icon}">${room.name}</div>`
         })
 
@@ -148,19 +156,18 @@ function basevacuum(widget_id, url, skin, parameters) {
 
         // Update state and UI
         self.state.room_list = roomHtml
-        const roomListContainer = document.getElementById("room_list")
+        const roomListContainer = document.getElementById(widget_id).querySelector("#room_list")
         roomListContainer.innerHTML = roomHtml
 
         // Rebind click events for dynamically generated elements
         const roomElements = roomListContainer.getElementsByClassName("room-select")
         Array.from(roomElements).forEach((roomElement) => {
-            const icon = roomElement.getAttribute("data-icon")
-            roomElement.addEventListener("click", () => onRoomClick(self, roomElement))
+            roomElement.addEventListener("click", onRoomClick)
         })
         // Attach onStartClick to the .start-clean button
         const startCleanButton = roomListContainer.getElementsByClassName("start-clean")[0]
         if (startCleanButton) {
-            startCleanButton.addEventListener("click", () => onStartClick(self))
+            startCleanButton.addEventListener("click", onStartClick)
         }
     }
 }
