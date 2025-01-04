@@ -144,7 +144,8 @@ function basevacuum(widget_id, url, skin, parameters) {
         self.rooms.forEach(function (room) {
             let selected = self.selectedRooms.includes(room.id) ? " selected" : ""
             let icon = room.icon // Get the icon from the room data
-            roomHtml += `<div class="room-select${selected}" data-room-id="${room.id}" data-icon="${icon}">${room.name}</div>`
+            const iconClass = icon.replace(':', '-') // Replace the semicolon for dash to use as a css class
+            roomHtml += `<div class="room-select${selected} ${iconClass}" data-room-id="${room.id}">${room.name}</div>`
         })
 
         const vacuum_id = (self.parameters.entity || "").split(".")[1]

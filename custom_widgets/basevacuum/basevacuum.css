@@ -33,7 +33,7 @@
 }
 
 .room-select:before {
-  font-family: 'Material Design Icons'; /* Use the correct font family */
+  font-family: 'Material Design Icons';
   font-size: 1em;
   display: block;
   margin-bottom: 10px;
@@ -43,28 +43,6 @@
   transform: translateX(-50%);
 }
 
-.room-select[data-icon='mdi:sofa-outline']:before {
-  content: '\F6F8';
-}
-
-.room-select[data-icon='mdi:room-service-outline']:before {
-  content: '\F4ED';
-}
-.room-select[data-icon='mdi:chef-hat']:before {
-  content: '\F2E0';
-}
-
-.room-select[data-icon='mdi:toilet']:before {
-  content: '\F7C2';
-}
-
-.room-select[data-icon='mdi:monitor-shimmer']:before {
-  content: '\F1026';
-}
-
-.room-select[data-icon='mdi:foot-print']:before {
-  content: '\F3C4';
-}
 .room-select:hover {
   background: #3c3c3c;
   transform: translateY(-2px);
@@ -109,21 +87,6 @@
   text-align: center;
   margin-top: auto;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 25px;
-}
-
-.start-clean:before {
-  content: '\F0144';
-  font-family: 'Material Design Icons';
-  position: absolute;
-  left: 15px;
-}
-
-/* Center the text within the button div */
-.start-clean {
   display: flex;
   align-items: center;
   justify-content: center;
