@@ -80,6 +80,7 @@
     border: 2px solid transparent;
     text-align: center;
     margin-top: auto;
+    padding-top:5px;
     position: relative;
     display: flex;
     align-items: center;
@@ -87,11 +88,14 @@
 }
 
 .start-clean:before {
-    content: "robot_vacuum";
+    content: "play_arrow"; /* Unicode for robot_vacuum */
     font-family: "Material Icons";
-    /* Remove margin-right */
-    position: absolute; /* Make the ::before absolute so that padding would work */
-    left: 15px; /* Set the position of the icon */
+    font-size: 1.5em;
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .start-clean:hover {
