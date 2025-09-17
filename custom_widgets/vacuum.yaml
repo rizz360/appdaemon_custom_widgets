@@ -1,12 +1,12 @@
 widget_type: basevacuum
-entity: "{{entity}}"  # Leave empty for dynamic population or provide a default entity if needed
+entity: "{{entity}}" # Leave empty for dynamic population or provide a default entity if needed
 post_service:
   service: vacuum/send_command
-  entity_id: "{{entity}}"  # This can remain as a template, but will be substituted via the Python logic.
+  entity_id: "{{entity}}" # This can remain as a template, but will be substituted via the Python logic.
 fields:
-  title: "{{title}}"  # These fields will be passed dynamically from the dashboard or the Python app
-  inputoptions: []          # Placeholder for dynamic room options
-  selectedoptions: []       # Placeholder for selected rooms
+  title: "{{title}}" # These fields will be passed dynamically from the dashboard or the Python app
+  inputoptions: [] # Placeholder for dynamic room options
+  selectedoptions: [] # Placeholder for selected rooms
 icons: []
 css: []
 static_icons: {}
